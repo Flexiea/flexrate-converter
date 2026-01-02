@@ -1,8 +1,14 @@
+import Header from "./components/Header";
+import ConverterCard from "./components/ConverterCard";
+
 function App() {
   return (
-    <div>
-      <h1>FlexRate Converter</h1>
-    </div>
+    <>
+      <Header />
+      <main>
+        <ConverterCard />
+      </main>
+    </>
   );
 }
 
