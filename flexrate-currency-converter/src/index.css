@@ -16,7 +16,7 @@ body {
 main {
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: 1.5rem;
 }
 
 .converter-card {
@@ -71,3 +71,5 @@ label {
   color: #666;
   line-height: 1.5;
 }
+
+
