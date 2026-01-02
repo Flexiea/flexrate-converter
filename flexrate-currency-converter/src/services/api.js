@@ -8,3 +8,4 @@ export const getLatestRates = async (baseCurrency = "USD") => {
     return null;
   }
 };
+export default { getLatestRates };
