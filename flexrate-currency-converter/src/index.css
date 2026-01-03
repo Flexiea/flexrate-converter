@@ -21,7 +21,7 @@ main {
 
 .converter-card {
   background: white;
-  padding: 2rem;
+  padding: 1.5rem;
   width: 420px;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -72,4 +72,12 @@ label {
   line-height: 1.5;
 }
 
+.converter-card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
 
+.field {
+  margin-bottom: 1.2rem;
+}
