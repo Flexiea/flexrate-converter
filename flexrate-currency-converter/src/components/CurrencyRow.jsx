@@ -1,15 +1,33 @@
-function CurrencyRow({ label }) {
+function CurrencyRow({
+  label,
+  currency,
+  amount,
+  onCurrencyChange,
+  onAmountChange,
+  readOnly = false,
+}) {
   return (
     <div className="field">
       <label>{label}</label>
 
       <div className="input-row">
-        <select>
-          <option>USD</option>
-          <option>EUR</option>
+        <select
+          value={currency}
+          onChange={(e) => onCurrencyChange(e.target.value)}
+        >
+          <option value="USD">USD</option>
+          <option value="EUR">EUR</option>
+          <option value="NGN">NGN</option>
+          <option value="GBP">GBP</option>
         </select>
 
-        <input type="number" placeholder="0.00" />
+        <input
+          type="number"
+          value={amount}
+          onChange={(e) => onAmountChange?.(e.target.value)}
+          placeholder="0.00"
+          readOnly={readOnly}
+        />
       </div>
     </div>
   );
