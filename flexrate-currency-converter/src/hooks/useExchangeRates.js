@@ -1,47 +1,37 @@
-import { useState, useEffect } from "react";
-import { getLatestRates } from "../services/api";
+import { useEffect, useState } from "react";
 
-export const useCurrency = () => {
-  // 1. These variables must be defined AT THE TOP of the hook
-  const [amount, setAmount] = useState(1);
-  const [fromCurrency, setFromCurrency] = useState("USD"); // <--- This must exist!
-  const [toCurrency, setToCurrency] = useState("EUR");
+export function useExchangeRates(baseCurrency) {
   const [rates, setRates] = useState({});
-  const [convertedAmount, setConvertedAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  
   useEffect(() => {
-    const fetchRates = async () => {
+    if (!baseCurrency) return;
+
+    async function fetchRates() {
+      setLoading(true);
+      setError(null);
+
       try {
-    
-        const data = await getLatestRates(fromCurrency); 
-        if (data) {
-          setRates(data);
+        const res = await fetch(
+          `https://api.frankfurter.app/latest?from=${baseCurrency}`
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch rates");
         }
-      } catch (error) {
-        console.error("Error in hook:", error);
+
+        const data = await res.json();
+        setRates(data.rates);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-    };
-    fetchRates();
-  }, [fromCurrency]); // Re-run when fromCurrency changes
-
-  useEffect(() => {
-    if (rates[toCurrency]) {
-      setConvertedAmount((amount * rates[toCurrency]).toFixed(2));
     }
-  }, [amount, toCurrency, rates]);
 
-  const swap = () => {
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
-  };
+    fetchRates();
+  }, [baseCurrency]);
 
-  return {
-    amount, setAmount,
-    fromCurrency, setFromCurrency,
-    toCurrency, setToCurrency,
-    convertedAmount,
-    rates,
-    swap
-  };
-};
+  return { rates, loading, error };
+}

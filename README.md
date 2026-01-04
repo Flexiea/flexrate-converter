@@ -100,6 +100,28 @@ This project uses the **ExchangeRate API (Free Open Access)** to retrieve live c
 - **Authentication:** Not required  
 - **Response Format:** JSON containing conversion_rates
 
+## API Information
+
+This project uses the Frankfurter API to retrieve live currency exchange rates.
+
+- **Base Endpoint:** https://api.frankfurter.app
+
+- **Endpoints Used:**Latest rates: /latest
+
+- **Example request for USD as base:** /latest?from=USD
+
+Convert currency: /latest?amount={amount}&from={base_currency}&to={target_currency}
+
+Example: /latest?amount=100&from=USD&to=EUR
+
+Historical rates: /YYYY-MM-DD?from={base_currency}&to={target_currency}
+
+Example: /2023-12-31?from=USD&to=EUR
+
+- **Authentication:** Not required
+
+- **Response Format:** JSON
+
 ## Deployment
 
 The application is deployed and accessible online:

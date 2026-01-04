@@ -23,8 +23,10 @@ function CurrencyRow({
 
         <input
           type="number"
-          value={amount}
-          onChange={(e) => onAmountChange?.(e.target.value)}
+          value={amount ?? ""}
+          onChange={
+            readOnly ? undefined : (e) => onAmountChange(e.target.value)
+          }
           placeholder="0.00"
           readOnly={readOnly}
         />

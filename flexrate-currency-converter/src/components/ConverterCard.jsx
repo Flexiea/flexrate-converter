@@ -1,14 +1,42 @@
 import { useState } from "react";
 import CurrencyRow from "./CurrencyRow";
+import { useExchangeRates } from "../hooks/useExchangeRates";
 
 function ConverterCard() {
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
   const [amount, setAmount] = useState("");
 
+  const { rates, loading, error } = useExchangeRates(fromCurrency);
+
+  const rate = rates?.[toCurrency];
+
+  const isUnsupported =
+    (fromCurrency === "NGN" || toCurrency === "NGN") &&
+    rates &&
+    !rates["NGN"];
+
+  const convertedAmount =
+    !isUnsupported && amount && rate
+      ? (amount * rate).toFixed(2)
+      : "";
+
+  function swapCurrencies() {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+  }
+
   return (
     <section className="converter-card">
       <h2>Currency Converter</h2>
+
+      {error && <p className="error">{error}</p>}
+
+      {isUnsupported && (
+        <p className="error">
+          NGN is not supported by the current exchange rate provider.
+        </p>
+      )}
 
       <CurrencyRow
         label="From"
@@ -18,25 +46,19 @@ function ConverterCard() {
         onAmountChange={setAmount}
       />
 
-      <button
-        className="swap-btn"
-        onClick={() => {
-          setFromCurrency(toCurrency);
-          setToCurrency(fromCurrency);
-        }}
-      >
+      <button className="swap-btn" onClick={swapCurrencies}>
         ⇅
       </button>
 
       <CurrencyRow
         label="To"
         currency={toCurrency}
-        amount={amount}
+        amount={convertedAmount}
         onCurrencyChange={setToCurrency}
-        readOnly
+        readOnly={isUnsupported}
       />
 
-      <button className="convert-btn">Convert</button>
+      {loading && <small>Fetching latest rates…</small>}
     </section>
   );
 }

@@ -1,11 +1,12 @@
-export const getLatestRates = async (baseCurrency = "USD") => {
-  try {
-    const response = await fetch(`https://open.er-api.com/v6/latest/${baseCurrency}`);
-    const data = await response.json();
-    return data.conversion_rates; 
-  } catch (error) {
-    console.error("API Error:", error);
-    return null;
+export async function fetchRates(baseCurrency) {
+  const response = await fetch(
+    `https://api.exchangerate.host/latest?base=${baseCurrency}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch exchange rates");
   }
-};
-export default { getLatestRates };
+
+  const data = await response.json();
+  return data.rates;
+}
