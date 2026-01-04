@@ -88,17 +88,6 @@ To run this project locally:
 
 NOTE: Exchange rates are fetched in real time and may vary based on market conditions.
 
-## API Information
-
-## API Information
-
-This project uses the **ExchangeRate API (Free Open Access)** to retrieve live currency exchange rates.
-
-- **Base Endpoint:** https://open.er-api.com/v6  
-- **Endpoint Used:** /latest/{base_currency}  
-- **Example Request:** /latest/USD  
-- **Authentication:** Not required  
-- **Response Format:** JSON containing conversion_rates
 
 ## API Information
 
