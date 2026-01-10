@@ -14,17 +14,21 @@ export function useExchangeRates(baseCurrency) {
 
       try {
         const res = await fetch(
-          `https://api.frankfurter.app/latest?from=${baseCurrency}`
+          `https://open.er-api.com/v6/latest/${baseCurrency}`
         );
+        const data = await res.json();
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch rates");
+        console.log("API RESPONSE:", data);
+
+        if (data.result !== "success") {
+          throw new Error("Failed to fetch exchange rates");
         }
 
-        const data = await res.json();
+        // ✅ CORRECT PROPERTY FOR THIS API
         setRates(data.rates);
       } catch (err) {
         setError(err.message);
+        setRates({});
       } finally {
         setLoading(false);
       }

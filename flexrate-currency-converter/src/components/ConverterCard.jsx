@@ -5,21 +5,15 @@ import { useExchangeRates } from "../hooks/useExchangeRates";
 function ConverterCard() {
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("EUR");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const { rates, loading, error } = useExchangeRates(fromCurrency);
 
-  const rate = rates?.[toCurrency];
+  const currencies = Object.keys(rates || {});
 
-  const isUnsupported =
-    (fromCurrency === "NGN" || toCurrency === "NGN") &&
-    rates &&
-    !rates["NGN"];
-
+  const rate = rates[toCurrency];
   const convertedAmount =
-    !isUnsupported && amount && rate
-      ? (amount * rate).toFixed(2)
-      : "";
+    amount && rate ? (amount * rate).toFixed(2) : "";
 
   function swapCurrencies() {
     setFromCurrency(toCurrency);
@@ -32,16 +26,11 @@ function ConverterCard() {
 
       {error && <p className="error">{error}</p>}
 
-      {isUnsupported && (
-        <p className="error">
-          NGN is not supported by the current exchange rate provider.
-        </p>
-      )}
-
       <CurrencyRow
         label="From"
         currency={fromCurrency}
         amount={amount}
+        currencies={currencies}
         onCurrencyChange={setFromCurrency}
         onAmountChange={setAmount}
       />
@@ -53,9 +42,10 @@ function ConverterCard() {
       <CurrencyRow
         label="To"
         currency={toCurrency}
-        amount={convertedAmount}
+        amount={convertedAmount || ""}
+        currencies={currencies}
         onCurrencyChange={setToCurrency}
-        readOnly={isUnsupported}
+        readOnly
       />
 
       {loading && <small>Fetching latest rates…</small>}
