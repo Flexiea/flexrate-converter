@@ -91,21 +91,17 @@ NOTE: Exchange rates are fetched in real time and may vary based on market condi
 
 ## API Information
 
-This project uses the Frankfurter API to retrieve live currency exchange rates.
+This project uses the ExchangeRate API (Free Open Access) to retrieve live currency exchange rates.
 
-- **Base Endpoint:** https://api.frankfurter.app
+- **Base Endpoint:** https://open.er-api.com/v6
 
-- **Endpoints Used:**Latest rates: /latest
+- **Endpoints Used:**/latest/{base_currency}
 
-- **Example request for USD as base:** /latest?from=USD
+- **Example request for USD as base:** /latest/USD
 
 Convert currency: /latest?amount={amount}&from={base_currency}&to={target_currency}
 
 Example: /latest?amount=100&from=USD&to=EUR
-
-Historical rates: /YYYY-MM-DD?from={base_currency}&to={target_currency}
-
-Example: /2023-12-31?from=USD&to=EUR
 
 - **Authentication:** Not required
 
