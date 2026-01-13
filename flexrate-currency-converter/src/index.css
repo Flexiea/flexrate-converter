@@ -26,6 +26,7 @@ body {
     "Noto Color Emoji",
     sans-serif;
   background: var(--bg-color);
+  background-image: url(assets/favpng_eccfb2def3d0ee016742b6bc7fd19019.png);
   color: var(--text-color);
 }
 
@@ -44,6 +45,7 @@ main {
   justify-content: center;
   margin-top: 1.5rem;
   padding: 0 1rem;
+  background-image: url(assets/favpng_eccfb2def3d0ee016742b6bc7fd19019.png);
 }
 
 .converter-card {
